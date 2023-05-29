@@ -5,14 +5,14 @@ import { useNavigate } from "react-router-dom";
 
 import Styles from "./Login.module.css";
 
-import Form from "../../Components/Form/Form";
+import Form from "../../Components/Forms/Form";
 import Input from "../../Components/Forms/Input";
 import Button from "../../Components/Common/Button";
 import Title from "../../Components/Common/Title";
 
 import { LoginData, login as loginService } from "../../Services/authService";
 
-import { useAuth } from "../../Providers/Auth";
+import { useAuth } from "../../Context/AuthContext";
 
 
 const Login: React.FC = () => {

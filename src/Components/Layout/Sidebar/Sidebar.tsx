@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 import styles from "./Sidebar.module.scss";
 
-import { useAuth } from "../../../Contexts/AuthContext";
+import { useAuth } from "../../../Context/AuthContext";
 
 const Sidebar = () => {
     const { logout } = useAuth();

@@ -1,49 +1,19 @@
 import api from "./api";
 
-export interface Experiencia {
-    id?: number;
-    titulo: string;
-    descricao: string;
-    tipo: string;
-    anoInicio: number | "";
-    anoFim: number | "";
+export interface Informacoes {
+   id: number;
+   foto: string;
+   nome: string;
+   cargo: string;
+   resumo: string;
 }
 
-export const createExperiencia = async (experiencia: Experiencia): Promise<Experiencia> => {
-    const response = await api.post<Experiencia>("/experiencias", experiencia);
-    return response.data;
-}
-    
-export const getExperiencias = async (): Promise<Experiencia[]> => {
-    const response = await api.get<Experiencia[]>("/experiencias");
-    return response.data;   
+export async function updateInformacoes(informacoes: Informacoes): Promise<Informacoes> {
+   const response = await api.put<Informacoes>("/informacoes/1", informacoes);
+   return response.data;
 }
 
-export const getExperienciasById = async (id: number): Promise<Experiencia> => {
-    const response = await api.get<Experiencia>(`/experiencias/${id}`);
-    return response.data;
-}
-
-export const getExperienciasByTipo = async (tipo: string): Promise<Experiencia[]> => {
-    const response = await api.get<Experiencia[]>(`/experiencias?tipo=${tipo}`);
-    return response.data;
-}
-
-export const updateExperiencia = async (experiencia: Experiencia): Promise<Experiencia> => {
-    const response = await api.put<Experiencia>(`/experiencias/${experiencia.id}`, experiencia);
-    return response.data;    
-}
-
-export const deleteExperiencia = async (id: number | undefined): Promise<Experiencia> => {
-    const response = await api.delete<Experiencia>(`/experiencias/${id}`);
-    return response.data;
-}
-
-export const createUpdateExperiencia = async (experiencia: Experiencia): Promise<Experiencia> => {
-    if (!experiencia.id) {
-    return await createExperiencia(experiencia);
-    }
-    else {
-        return await updateExperiencia(experiencia);
-    }
+export async function getInformacoes(): Promise<Informacoes> {
+   const response = await api.get<Informacoes>("/informacoes/1");
+   return response.data;
 }

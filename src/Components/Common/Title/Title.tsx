@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import Styles from './Title.module.scss';
+import Styles from "./Title.module.scss";
 
 interface TitleProps {
     className?: string;

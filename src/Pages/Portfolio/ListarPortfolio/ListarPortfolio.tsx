@@ -11,7 +11,7 @@ import {
     Projeto,
     deleteProjeto,
     getPortfolio
-} from "../../../Services/PortfolioService";
+} from "../../../Services/portfolioService";
 
 const ListarPortfolio: React.FC = () => {
     const navigate = useNavigate();

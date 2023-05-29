@@ -1,41 +1,33 @@
 import api from "./api";
 
-export interface Projeto {
-    id?: number;
-    link: string;
-    image: string;
-    titulo: string;
+export interface Portfolio {
+   id: number;
+   titulo: string;
+   imagem: string;
+   link: string;
 }
 
-export const createProjeto = async (projeto: Projeto): Promise<Projeto> => {
-    const response = await api.post<Projeto>("/portfolio", projeto);
-    return response.data;
-}
+export const createPortfolio = async (portfolio: Portfolio) => {
+   const response = await api.post("/portfolio", portfolio);
+   return response.data;
+};
 
-export const getPortfolio = async (): Promise<Projeto[]> => {
-    const response = await api.get<Projeto[]>("/portfolio");
-    return response.data;
-}
+export const getPortfolio = async () => {
+   const response = await api.get("/portfolio");
+   return response.data;
+};
 
-export const deletePortfolio = async (id: number | undefined): Promise<Projeto> => {
-    const response = await api.delete<Projeto>(`/portfolio/${id}`);
-    return response.data;
-}
+export const getPortfolioById = async (id: number) => {
+   const response = await api.get(`/portfolio/${id}`);
+   return response.data;
+};
 
-export const updateProjeto = async (projeto: Projeto): Promise<Projeto> => {
-    const response = await api.put<Projeto>(`/portfolio/${projeto.id}`, projeto);
-    return response.data;
-}
+export const updatePortfolio = async (portfolio: Portfolio) => {
+   const response = await api.put(`/portfolio/${portfolio.id}`, portfolio);
+   return response.data;
+};
 
-export const getProjeto = async (id: number): Promise<Projeto> => {
-    const response = await api.get<Projeto>(`/portfolio/${id}`);
-    return response.data;
-}
-
-export const createOrUpdateProjeto = async (projeto: Projeto): Promise<Projeto> => {
-    if (!projeto.id) {
-        return await createProjeto(projeto);
-    } else {
-        return await updateProjeto(projeto);
-    }
-}
+export const deletePortfolio = async (id: number) => {
+   const response = await api.delete(`/portfolio/${id}`);
+   return response.data;
+};

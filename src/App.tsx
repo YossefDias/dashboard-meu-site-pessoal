@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./Pages/Login";
 import AuthRoutes from "./Routes/AuthRoutes";
-import { AuthProvider } from "./Contexts/AuthContext";
+import { AuthProvider } from "./Context/AuthContext";
 
 const App: React.FC = () => {
   return (

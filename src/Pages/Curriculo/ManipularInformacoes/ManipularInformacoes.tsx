@@ -1,140 +1,107 @@
-import React, { useEffect, useState } from "react";
+import styles from "./CadastrarInformacoes.module.css";
+import { useEffect, useState } from "react";
+
+import { Formik, Form } from "formik";
 
 import * as Yup from "yup";
-import { AxiosError } from "axios";
 
-import Form from "../../../Components/Forms/Form";
-import Input from "../../../Components/";
-import Button from "../../../Components/Button/Button";
-import Title from "../../../Components/Title/Title";
+import Input from "../../../Components/Forms/Input";
+import Textarea from "../../../Components/Forms/Textarea";
+import { Informacoes, updateInformacoes, getInformacoes } from "../../../Services/informacoesService";
 import InformacoesCard from "./InformacoesCard";
-import Textarea from "../../../Components/Forms/Textarea/Textarea";
 
-import {
-    informacoes,
-    getInformacoes,
-    deleteInformacoes,
-    createOrUpdateInformacoes,
-} from "../../../Services/informacoes";
+const CadastrarInformacoes: React.FC = () => {
+   const [informacoes, setInformacoes] = useState<Informacoes>({} as Informacoes);
 
-import Styles from "./ManipularInformacoes.module.css";
+   const initialValues: Informacoes = {
+      id: 1,
+      foto: "",
+      nome: "",
+      cargo: "",
+      resumo: "",
+   };
 
-const ManipularInformacoes: React.FC = () => {
-    const [informacoesState, setInformacoesState] = useState<Informacoes>();
+   const validationSchema = Yup.object().shape({
+      foto: Yup.string().required("Campo obrigatório!"),
+      nome: Yup.string().required("Campo obrigatório!"),
+      cargo: Yup.string().required("Campo obrigatório!"),
+      resumo: Yup.string().required("Campo obrigatório!"),
+   });
 
-    const initialValues: Informacoes = {
-        foto: "",
-        nome: "",
-        cargo: "",
-        resumo: "",
+   const fetchInformacao = async () => {
+      try {
+         const informacao = await getInformacoes();
+         setInformacoes(informacao);
+      } catch (error) {
+         console.log("Erro ao buscar informações: ", error);
+      }
+   };
 
-    };
+   useEffect(() => {
+      fetchInformacao();
+   }, []);
 
-    const validationSchema = Yup.object().shape({
-        foto: Yup.string().required("Campo obrigatório"),
-        nome: Yup.string().required("Campo obrigatório"),
-        cargo: Yup.string().required("Campo obrigatório"),
-        resumo: Yup.string().required("Campo obrigatório"),
+   const onSubmit = async (values: Informacoes) => {
+      try {
+         await updateInformacoes(values);
+         setInformacoes(values);
+         console.log(values);
+         // resetForm();
+         alert("Formulário enviado com sucesso");
+      } catch (error) {
+         console.log("Erro ao enviar o formulário", error);
+         alert("Ocorreu um erro ao enviar o formulário. Tente novamente.");
+      }
+   };
 
-    });
+   const handleDelete = async () => {
+      try {
+         await updateInformacoes(initialValues);
+         setInformacoes(initialValues);
+         alert("Informações deletadas com sucesso!");
+      } catch (error) {
+         console.log("Erro ao deletar informações:", error);
+         alert("Ocorreu um erro ao deletar as informações. Tente novamente");
+      }
+   };
 
-    const fetchInformacao = async () => {
-        try {
-            const Informacao = await getInformacoes();
-            setInformacoes(Informacao);
-        } catch (error) {
-            if (error instanceof AxiosError) {
-            if (error.response?.status !== 404) {
-                console.error ("Erro ao buscar informações", error);
-            }
-
-        } else {
-            console.error ("Ocorreu um erro desconhecido ao buscar informações", error);
-        }
-
-        }
-    };
-
-    useEffect(() => {
-        fetchInformacao();
-    }, []);
-
-    const onSubmit = async (values: Informacoes) => {
-        try {
-            await createOrUpdateInformacoes(values);
-            setInformacoes(values);
-            alert ("Formulario enviado com sucesso!");
-        } catch (error) {
-         console.error ("Erro ao enviar formulário", error);
-         alert("Ocorreu um erro ao enviar formulário, tente novamente!");
-            }
-    };
-
-    return (
-        <div className={styles.container}>
-
-            <Form 
-            initialValues={Informacoes || initialValues}
+   return (
+      <div className={styles.formWrapper}>
+         <Formik
+            initialValues={informacoes}
             enableReinitialize={true}
             validationSchema={validationSchema}
-            onSubmit={onSubmit}>
-
+            onSubmit={onSubmit}
+         >
             {({ errors, touched }) => (
-                <>
-                <Title> Informações </Title>
-                <Input
-                    label="Foto"
-                    name="foto"
-                    errors={errors.foto}
-                    touched={touched.foto}
-                    />
+               <Form className={styles.form}>
+                  <h2 className={styles.title}>Informações Pessoais</h2>
 
-                <Input
-                    label="Nome"
-                    name="nome"
-                    errors={errors.nome}
-                    touched={touched.nome}
-                    />
+                  <Input label="Foto" name="foto" errors={errors.foto} touched={touched.foto} />
 
-                <Input
-                    label="Cargo"
-                    name="cargo"
-                    errors={errors.cargo}
-                    touched={touched.cargo}
-                    />
+                  <Input label="Nome" name="nome" errors={errors.nome} touched={touched.nome} />
 
-                <Input
-                    label="Resumo"
-                    name="resumo"
-                    errors={errors.resumo}
-                    touched={touched.resumo}
-                    />
+                  <Input label="Cargo" name="cargo" errors={errors.cargo} touched={touched.cargo} />
 
-                <Textarea 
-                    label="Resumo"
-                    name="resumo"
-                    errors={errors.resumo}
-                    touched={touched.resumo}
-                    />
+                  <Textarea label="Resumo" name="resumo" errors={errors.resumo} touched={touched.resumo} />
 
-                <Button type="submit">Salvar</Button>
-                    
-                </>
-                
+                  <button type="submit" className={styles.button}>
+                     Salvar
+                  </button>
+               </Form>
             )}
-            </Form>
+         </Formik>
 
-            {informacoesState && 
-                <div className={styles.card}>
-                    <InformacoesCard informacoes={informacoes} />
-                    <Button onClick={handleDelete} red>Deletar</Button>
-                </div>
-}
-
-
-        </div>
-
-    );
+         {informacoes && Object.entries(informacoes).some(([key, value]) => key !== "id" && value.trim() !== "") && (
+            <div className={styles.cardContainer}>
+               <InformacoesCard informacoes={informacoes} />
+               <button type="button" onClick={handleDelete} className={`${styles.button} ${styles.deleteButton}`}>
+                  Deletar
+               </button>
+            </div>
+         )}
+      </div>
+   );
 };
 
-export default ManipularInformacoes;
+export default CadastrarInformacoes;
