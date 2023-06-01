@@ -1,14 +1,17 @@
-import styles from "./CadastrarInformacoes.module.css";
+import styles from "./ManipularInformacoes.module.css";
 import { useEffect, useState } from "react";
 
 import { Formik, Form } from "formik";
 
 import * as Yup from "yup";
 
+import Button from "../../../Components/Common/Button/Button";
+
 import Input from "../../../Components/Forms/Input";
 import Textarea from "../../../Components/Forms/Textarea";
 import { Informacoes, updateInformacoes, getInformacoes } from "../../../Services/informacoesService";
 import InformacoesCard from "./InformacoesCard";
+import React from "react";
 
 const CadastrarInformacoes: React.FC = () => {
    const [informacoes, setInformacoes] = useState<Informacoes>({} as Informacoes);
@@ -85,9 +88,9 @@ const CadastrarInformacoes: React.FC = () => {
 
                   <Textarea label="Resumo" name="resumo" errors={errors.resumo} touched={touched.resumo} />
 
-                  <button type="submit" className={styles.button}>
+                  <Button type="submit">
                      Salvar
-                  </button>
+                  </Button>
                </Form>
             )}
          </Formik>
@@ -95,9 +98,9 @@ const CadastrarInformacoes: React.FC = () => {
          {informacoes && Object.entries(informacoes).some(([key, value]) => key !== "id" && value.trim() !== "") && (
             <div className={styles.cardContainer}>
                <InformacoesCard informacoes={informacoes} />
-               <button type="button" onClick={handleDelete} className={`${styles.button} ${styles.deleteButton}`}>
+               <Button type="button" onClick={handleDelete}>
                   Deletar
-               </button>
+               </Button>
             </div>
          )}
       </div>

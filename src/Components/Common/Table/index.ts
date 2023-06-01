@@ -1,1 +1,1 @@
-import * from "./Table";
+export * from "./Table";

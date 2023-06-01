@@ -2,7 +2,7 @@ import React from "react";
 
 import { NavLink } from "react-router-dom";
 
-import styles from "./Sidebar.module.scss";
+import styles from "./Sidebar.module.css";
 
 import { useAuth } from "../../../Context/AuthContext";
 
