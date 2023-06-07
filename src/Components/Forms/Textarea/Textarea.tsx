@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Styles from "./Textarea.module.scss";
+import Styles from "./Textarea.module.css";
 
 import Input, { InputProps } from "../Input";
 

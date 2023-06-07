@@ -7,7 +7,7 @@ import CadastrarInformacoes from "../Pages/Curriculo/ManipularInformacoes/";
 import CadastrarExperiencia from "../Pages/Curriculo/CadastrarExperiencia";
 import ListaPortfolio from "../Pages/Portfolio/ListarPortfolio";
 import CadastrarPortfolio from "../Pages/Portfolio/CadastrarPortfilio/CadastrarPortfolio";
-import ListaExperiencia from "../Pages/Curriculo/ListaExperiencia";
+import ListaExperiencia from "../Pages/Curriculo/ListarExperiencia";
 import { useAuth } from "../Context/AuthContext";
 
 const AppRoutes: React.FC = () => {

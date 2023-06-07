@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 
 import {
     Table,
-    Colum
+    Column
 } from "../../../Components/Common/Table/Table";
 
 import {
-    Projeto,
-    deleteProjeto,
+    Portfolio,
+    deletePortfolio,
     getPortfolio
 } from "../../../Services/portfolioService";
 
@@ -29,9 +29,9 @@ const ListarPortfolio: React.FC = () => {
     useEffect(() => {
         fetchPortfolio();
     }, []);
-    const handleDelete = async (portfolio: Projeto) => {
+    const handleDelete = async (portfolio: Portfolio) => {
         try {
-            await deleteProjeto(portfolio.id);
+            await deletePortfolio(portfolio.id);
             fetchPortfolio();
             alert("Portfólio excluido com sucesso!");
         } catch (error) {
@@ -39,17 +39,19 @@ const ListarPortfolio: React.FC = () => {
             alert("Erro ao excluir o portfólio!");
         }
     };
-    const columns: Column<Projeto>[] = [
-        { header: "Titulo", acessor: "title" },
-        { header: "imagem", acessor: "image" },
-        { header: "Link", acessor: "link" },
+    const columns: Column<Portfolio>[] = [
+        { header: "Titulo", accessor: "titulo" },
+        { header: "imagem", accessor: "imagem" },
+        { header: "Link", accessor: "link" },
     ];
     return (
         <Table 
         columns={columns}
         data={portfolio}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
+        // handleEdit={handleEdit}
+        // handleDelete={handleDelete}
+        onEdit={handleEdit}
+      onDelete={handleDelete}
         />
     );
 };
