@@ -9,6 +9,7 @@ import ListaPortfolio from "../Pages/Portfolio/ListarPortfolio";
 import CadastrarPortfolio from "../Pages/Portfolio/CadastrarPortfilio/CadastrarPortfolio";
 import ListaExperiencia from "../Pages/Curriculo/ListarExperiencia";
 import { useAuth } from "../Context/AuthContext";
+import React from "react";
 
 const AppRoutes: React.FC = () => {
    const { authenticated, isLoading } = useAuth();
